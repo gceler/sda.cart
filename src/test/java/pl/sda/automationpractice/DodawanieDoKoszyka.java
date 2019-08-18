@@ -1,9 +1,6 @@
 package pl.sda.automationpractice;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -32,30 +29,39 @@ public class DodawanieDoKoszyka {
     public void zamkniecie() {
         przegladarka.quit();
     }
+
     @Test
     public void dodajProduktDoKoszyka() {
+        otworzStroneGlowna();
+        dodajProduktNr(1);
+        kontynuujZakupy();
+        dodajProduktNr(2);
+        przejdzDoKasy();
+        sprawdzIloscProduktow("2");
+    }
 
+    public void otworzStroneGlowna() {
         przegladarka.get("http://automationpractice.com/index.php");
+    }
 
+    public void dodajProduktNr(int i) {
         przyciski = przegladarka.findElementsByCssSelector("#homefeatured .ajax_add_to_cart_button");
+        przyciski.get(i-1).click();
+    }
 
-        //actions.moveToElement(przyciski.get(3)).perform(); - u mnie przechodzi bez tego
-
-        przyciski.get(3).click();
-
+    public void kontynuujZakupy() {
         kontynuuj = przegladarka.findElementByCssSelector(".continue");
-
         kontynuuj.click();
+    }
 
-        przyciski.get(3).click();
-
+    public void przejdzDoKasy() {
         kasa = przegladarka.findElementByCssSelector(".button-medium");
-
         kasa.click();
+    }
 
-        iloscProduktow = przegladarka.findElementByCssSelector(".cart_quantity_input").getAttribute("value");
-
-        Assert.assertEquals ("2",iloscProduktow);
+    public void sprawdzIloscProduktow(String x) {
+        iloscProduktow = przegladarka.findElementByCssSelector(".ajax_cart_quantity").getText();
+        Assert.assertEquals (x,iloscProduktow);
     }
 }
 
