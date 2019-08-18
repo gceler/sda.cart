@@ -40,26 +40,26 @@ public class DodawanieDoKoszyka {
         sprawdzIloscProduktow("2");
     }
 
-    public void otworzStroneGlowna() {
+    private void otworzStroneGlowna() {
         przegladarka.get("http://automationpractice.com/index.php");
     }
 
-    public void dodajProduktNr(int i) {
+    private void dodajProduktNr(int i) {
         przyciski = przegladarka.findElementsByCssSelector("#homefeatured .ajax_add_to_cart_button");
         przyciski.get(i-1).click();
     }
 
-    public void kontynuujZakupy() {
+    private void kontynuujZakupy() {
         kontynuuj = przegladarka.findElementByCssSelector(".continue");
         kontynuuj.click();
     }
 
-    public void przejdzDoKasy() {
+    private void przejdzDoKasy() {
         kasa = przegladarka.findElementByCssSelector(".button-medium");
         kasa.click();
     }
 
-    public void sprawdzIloscProduktow(String x) {
+    private void sprawdzIloscProduktow(String x) {
         iloscProduktow = przegladarka.findElementByCssSelector(".ajax_cart_quantity").getText();
         Assert.assertEquals (x,iloscProduktow);
     }
